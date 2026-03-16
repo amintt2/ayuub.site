@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ayuub / Shadow⁷</title>
+  <meta name="description" content="Profil de Ayuub / Shadow⁷" />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #131a2e;
+      --text: #e7ecff;
+      --muted: #a9b5d6;
+      --accent: #6ea8fe;
+      --accent-2: #93c5fd;
+      --border: #233051;
+      --shadow: 0 12px 30px rgba(0, 0, 0, .35);
+    }
+
+    html[data-theme="light"] {
+      --bg: #f4f7ff;
+      --card: #ffffff;
+      --text: #101632;
+      --muted: #4b567a;
+      --accent: #2563eb;
+      --accent-2: #1d4ed8;
+      --border: #dce5ff;
+      --shadow: 0 12px 30px rgba(37, 99, 235, .15);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(110,168,254,.22), transparent 55%), var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: min(760px, 100%);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      letter-spacing: .2px;
+    }
+
+    .subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+
+    .toggle {
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      border-radius: 999px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    a.btn, button.btn {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 8px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      background: linear-gradient(180deg, rgba(147,197,253,.08), transparent);
+      font-weight: 650;
+      cursor: pointer;
+      transition: transform .12s ease, border-color .12s ease;
+    }
+
+    a.btn:hover, button.btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+    }
+
+    .notice {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .copy-ok {
+      color: var(--accent-2);
+      font-weight: 600;
+      margin-left: 8px;
+      font-size: .86rem;
+      opacity: 0;
+      transition: opacity .2s ease;
+    }
+    .copy-ok.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="top">
+      <div>
+        <h1>Ayuub / Shadow⁷</h1>
+        <p class="subtitle">Mes profils & liens rapides</p>
+      </div>
+      <button id="themeToggle" class="toggle" type="button" aria-label="Changer le thème">🌙 Sombre</button>
+    </div>
+
+    <section class="grid">
+      <button id="discordBtn" class="btn" type="button">💬 Discord: @kaito_09.ay <span id="copyOk" class="copy-ok">copié</span></button>
+      <a class="btn" href="https://www.paypal.me/AyouBT09" target="_blank" rel="noopener">💸 Me soutenir sur PayPal</a>
+      <a class="btn" href="https://www.roblox.com/users/profile?username=ayoubbg_9" target="_blank" rel="noopener">🎮 Roblox (ayoubbg_9)</a>
+      <a class="btn" href="https://store.epicgames.com/u/aytounsi" target="_blank" rel="noopener">🛡️ Epic Games (aytounsi)</a>
+      <a class="btn" href="https://link.brawlstars.com/invite/friend/fr?tag=8YYUPU288&token=67jbmb9n" target="_blank" rel="noopener">⭐ Ajouter sur Brawl Stars</a>
+    </section>
+
+    <p class="notice">Si une app est installée sur téléphone, les liens peuvent s’ouvrir directement dedans.</p>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    const discordBtn = document.getElementById('discordBtn');
+    const copyOk = document.getElementById('copyOk');
+
+    const saved = localStorage.getItem('theme');
+    if (saved === 'light' || saved === 'dark') {
+      root.setAttribute('data-theme', saved);
+    }
+
+    function syncThemeLabel() {
+      const dark = root.getAttribute('data-theme') !== 'light';
+      btn.textContent = dark ? '🌙 Sombre' : '☀️ Clair';
+    }
+    syncThemeLabel();
+
+    btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      syncThemeLabel();
+    });
+
+    discordBtn.addEventListener('click', async () => {
+      const tag = 'kaito_09.ay';
+      try {
+        await navigator.clipboard.writeText(tag);
+        copyOk.classList.add('show');
+        setTimeout(() => copyOk.classList.remove('show'), 1400);
+      } catch (e) {
+        alert('Pseudo Discord : ' + tag);
+      }
+      window.open('discord://', '_blank');
+      setTimeout(() => window.open('https://discord.com/app', '_blank'), 250);
+    });
+  </script>
+</body>
+</html>
