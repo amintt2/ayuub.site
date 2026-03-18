@@ -146,6 +146,7 @@
     </section>
 
     <p class="notice">Si une app est installée sur téléphone, les liens peuvent s’ouvrir directement dedans.</p>
+    <p class="notice">👀 Vues du site: <strong id="viewCount">...</strong></p>
   </main>
 
   <script>
@@ -153,6 +154,7 @@
     const btn = document.getElementById('themeToggle');
     const discordBtn = document.getElementById('discordBtn');
     const copyOk = document.getElementById('copyOk');
+    const viewCountEl = document.getElementById('viewCount');
 
     const saved = localStorage.getItem('theme');
     if (saved === 'light' || saved === 'dark') {
@@ -171,6 +173,24 @@
       localStorage.setItem('theme', next);
       syncThemeLabel();
     });
+
+    async function incrementViewCounter() {
+      try {
+        const namespace = 'ayuub-site';
+        const key = 'global-views';
+        const res = await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
+        const data = await res.json();
+        if (typeof data.value === 'number') {
+          viewCountEl.textContent = data.value.toLocaleString('fr-FR');
+          return;
+        }
+      } catch (e) {
+        // noop
+      }
+      viewCountEl.textContent = 'indisponible';
+    }
+
+    incrementViewCounter();
 
     discordBtn.addEventListener('click', async () => {
       const tag = 'kaito_09.ay';
